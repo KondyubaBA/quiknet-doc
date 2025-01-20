@@ -37,3 +37,30 @@ int Message(const char* message, int icon) {
     return result;
 }
 ```
+
+3.Вспомогательные функции
+```c
+// Вспомогательная функция для извлечения строковых значений
+const char* get_field_string(lua_State* L, const char* field) {
+    lua_getfield(L, 1, field);
+    const char* value = lua_tostring(L, -1);
+    lua_pop(L, 1);
+    return value;
+}
+
+// Вспомогательная функция для извлечения целых значений
+int get_field_integer(lua_State* L, const char* field) {
+    lua_getfield(L, 1, field);
+    int value = (int)lua_tointeger(L, -1);
+    lua_pop(L, 1);
+    return value;
+}
+
+// Вспомогательная функция для извлечения значений типа float
+float get_field_float(lua_State* L, const char* field) {
+    lua_getfield(L, 1, field); // Извлекаем значение по ключу field
+    float value = (float)lua_tonumber(L, -1); // Преобразуем значение в float
+    lua_pop(L, 1); // Удаляем значение со стека
+    return value; // Возвращаем извлеченное значение
+}
+```
